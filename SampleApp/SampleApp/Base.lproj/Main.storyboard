@@ -31,7 +31,7 @@
                                         <rect key="frame" x="20" y="49" width="335" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="username"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h2i-TK-VTx">
                                         <rect key="frame" x="20" y="107" width="74" height="21"/>
@@ -39,17 +39,16 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8jQ-Ns-tLU">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8jQ-Ns-tLU">
                                         <rect key="frame" x="20" y="136" width="335" height="30"/>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EDE-mp-4Lk">
                                         <rect key="frame" x="164" y="196" width="47" height="30"/>
                                         <state key="normal" title="Sign In"/>
                                         <connections>
-                                            <segue destination="919-92-kbV" kind="show" id="HOJ-J1-Z0q"/>
+                                            <action selector="signIn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tVL-Vi-UJf"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -86,8 +85,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="gCK-Dt-fP2"/>
                     <connections>
-                        <outlet property="activityIndicatorView" destination="RAx-AM-Q7x" id="8Ra-as-r8s"/>
-                        <outlet property="buttonSignInView" destination="EDE-mp-4Lk" id="GGi-WU-SA0"/>
+                        <outlet property="activityIndicatorView" destination="rcQ-gu-Kqd" id="6zR-fO-s1i"/>
+                        <outlet property="buttonSignInView" destination="EDE-mp-4Lk" id="Za1-bX-Kyh"/>
+                        <outlet property="textPasswordView" destination="8jQ-Ns-tLU" id="ibq-xR-MSp"/>
+                        <outlet property="textUserView" destination="9Xw-9C-4kK" id="5Wn-Ed-khv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -101,7 +102,19 @@
                     <view key="view" contentMode="scaleToFill" id="DIh-yq-m5S">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L5r-BU-ZOK">
+                                <rect key="frame" x="97" y="309.5" width="181" height="48"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="L5r-BU-ZOK" firstAttribute="centerX" secondItem="DIh-yq-m5S" secondAttribute="centerX" id="MpH-19-wI4"/>
+                            <constraint firstItem="L5r-BU-ZOK" firstAttribute="centerY" secondItem="DIh-yq-m5S" secondAttribute="centerY" id="ygf-Uf-CLX"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="1yr-bI-Pla"/>
                     </view>
                 </viewController>
