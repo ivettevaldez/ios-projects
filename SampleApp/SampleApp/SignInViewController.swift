@@ -52,17 +52,17 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         activityIndicatorView?.startAnimating()
         activityIndicatorView?.isHidden = false
         
-        // Dummy delay to simulate processing... Then, go to Main screen.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // 2: Number of seconds
+//        // Dummy delay to simulate processing... Then, go to Main screen.
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // 2: Number of seconds
             if (self.hasValidCredentials()) {
-                self.goToMainScreen()
+                self.tryToSignIn(self.getUser(), self.getPassword())
             } else {
                 self.activityIndicatorView?.stopAnimating()
                 self.activityIndicatorView?.isHidden = true
                 
                 self.showAlert()
             }
-        }
+//        }
     }
     
     func goToMainScreen() {
@@ -107,12 +107,62 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         return (password == "mypass")
     }
     
+    func getUser() -> String {
+        return textUserView?.text ?? ""
+    }
+    
+    func getPassword() -> String {
+        return textPasswordView?.text ?? ""
+    }
+    
     func hasValidCredentials() -> Bool {
-        let strUser = textUserView?.text ?? ""
-        let strPassword = textPasswordView?.text ?? ""
+        let strUser = getUser()
+        let strPassword = getPassword()
         
         return (self.validUser(strUser))
             && (self.validPassword(strPassword))
+    }
+    
+    // MARK: REST service
+    
+    func tryToSignIn(_ user: String, _ password: String) {
+        let params = ["username":user, "password":password] as Dictionary<String, String>
+        
+        var request = URLRequest(url: URL(string: "https://demo1976201.mockable.io/api/auth/sign_in")!)
+        request.httpMethod = "POST"
+        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let session = URLSession.shared
+        let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
+            do {
+                if (response != nil) {
+                    if let httpResponse = response as? HTTPURLResponse {
+                        print("Status code: \(httpResponse.statusCode)")
+                    } else {
+                        print("Oops! Cannot get status code from request")
+                    }
+                } else {
+                    print("NULL response")
+                }
+                
+                if (data != nil) {
+                    let json = try JSONSerialization.jsonObject(with: data!) as! Dictionary<String, AnyObject>
+                    print("Data: \(json)")
+                    self.goToMainScreen()
+                } else {
+                    print("NULL data")
+                }
+                
+                // TODO: Use this on main thread
+                self.activityIndicatorView?.stopAnimating()
+                self.activityIndicatorView?.isHidden = true
+            } catch {
+                print("Error: \(error)")
+            }
+        })
+        
+        task.resume()
     }
     
 }
