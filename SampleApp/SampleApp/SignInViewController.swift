@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class SignInViewController: UIViewController, UITextFieldDelegate {
     
@@ -35,7 +36,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // Hide the keyboard.
+        // Hide keyboard.
         textField.resignFirstResponder()
         return true
     }
@@ -48,32 +49,39 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: Actions and related functions
-    @IBAction func signIn(_ sender: UIButton) {
-        activityIndicatorView?.startAnimating()
-        activityIndicatorView?.isHidden = false
+    @IBAction func tryToSignIn(_ sender: UIButton) {
+        showActivityIndicator(true)
         
-//        // Dummy delay to simulate processing... Then, go to Main screen.
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // 2: Number of seconds
-            if (self.hasValidCredentials()) {
-                self.tryToSignIn(self.getUser(), self.getPassword())
-            } else {
-                self.activityIndicatorView?.stopAnimating()
-                self.activityIndicatorView?.isHidden = true
-                
-                self.showAlert()
-            }
-//        }
+        if (hasValidCredentials()) {
+            signIn()
+        } else {
+            showActivityIndicator(false)
+            
+            let title = "Wrong credentials"
+            let message = "User or password are invalid, try again!"
+            showAlert(title, message)
+        }
     }
     
-    func goToMainScreen() {
+    private func showActivityIndicator(_ show: Bool) {
+        if (show) {
+            activityIndicatorView?.startAnimating()
+            activityIndicatorView?.isHidden = false
+        } else {
+            activityIndicatorView?.stopAnimating()
+            activityIndicatorView?.isHidden = true
+        }
+    }
+    
+    private func goToMainScreen() {
         // Navigate to MainViewController.
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
         self.present(mainViewController, animated: true, completion: nil)
     }
     
-    func showAlert() {
-        let alert = UIAlertController(title: "Wrong credentials", message: "User or password are invalid, try again!", preferredStyle: UIAlertControllerStyle.alert)
+    private func showAlert(_ title: String, _ message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
             switch action.style{
@@ -92,41 +100,68 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Field validations
     
-    func hasFilledFields() -> Bool {
-        return !(textUserView.text?.isEmpty)!
-            && !(textPasswordView.text?.isEmpty)!
-    }
- 
-    func validUser(_ user: String) -> Bool {
-        // TODO: Implement real user validation
-        return (user == "silvia")
-    }
-    
-    func validPassword(_ password: String) -> Bool {
-        // TODO: Implement real password validation
-        return (password == "mypass")
-    }
-    
-    func getUser() -> String {
+    private func getUser() -> String {
         return textUserView?.text ?? ""
     }
     
-    func getPassword() -> String {
+    private func getPassword() -> String {
         return textPasswordView?.text ?? ""
     }
     
-    func hasValidCredentials() -> Bool {
-        let strUser = getUser()
-        let strPassword = getPassword()
-        
-        return (self.validUser(strUser))
-            && (self.validPassword(strPassword))
+    private func hasFilledFields() -> Bool {
+        return !(getUser().isEmpty)
+            && !(getPassword().isEmpty)
+    }
+ 
+    private func validUser() -> Bool {
+        return (getUser().count >= 6)
+    }
+    
+    private func validPassword() -> Bool {
+        return (getPassword().count >= 6)
+    }
+    
+    private func hasValidCredentials() -> Bool {
+        return (validUser()) && (validPassword())
     }
     
     // MARK: REST service
     
-    func tryToSignIn(_ user: String, _ password: String) {
-        let params = ["username":user, "password":password] as Dictionary<String, String>
+    private func onSuccess(_ data: Data) {
+        // Do this on main thread
+        DispatchQueue.main.async {
+            do {
+                let json = try JSON(data: data)
+                print("Data: \(json)")
+                
+                if let _ = json["data"].dictionary {
+                    if json["data"]["id"].exists() {
+                        self.showActivityIndicator(false)
+                        self.goToMainScreen()
+                    } else {
+                        self.onFailure()
+                    }
+                }
+            } catch {
+                print("Error getting data")
+            }
+        }
+    }
+    
+    private func onFailure() {
+        // Do this on main thread
+        DispatchQueue.main.async {
+            print("NULL data")
+            self.showActivityIndicator(false)
+            
+            let title = "Oops!"
+            let message = "Something went wrong, try again"
+            self.showAlert(title, message)
+        }
+    }
+    
+    private func signIn() {
+        let params = ["username":getUser(), "password":getPassword()] as Dictionary<String, String>
         
         var request = URLRequest(url: URL(string: "https://demo1976201.mockable.io/api/auth/sign_in")!)
         request.httpMethod = "POST"
@@ -135,30 +170,22 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         
         let session = URLSession.shared
         let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
-            do {
-                if (response != nil) {
-                    if let httpResponse = response as? HTTPURLResponse {
-                        print("Status code: \(httpResponse.statusCode)")
-                    } else {
-                        print("Oops! Cannot get status code from request")
-                    }
+            // Manage response
+            if (response != nil) {
+                if let httpResponse = response as? HTTPURLResponse {
+                    print("Status code: \(httpResponse.statusCode)")
                 } else {
-                    print("NULL response")
+                    print("Cannot get status code from request")
                 }
-                
-                if (data != nil) {
-                    let json = try JSONSerialization.jsonObject(with: data!) as! Dictionary<String, AnyObject>
-                    print("Data: \(json)")
-                    self.goToMainScreen()
-                } else {
-                    print("NULL data")
-                }
-                
-                // TODO: Use this on main thread
-                self.activityIndicatorView?.stopAnimating()
-                self.activityIndicatorView?.isHidden = true
-            } catch {
-                print("Error: \(error)")
+            } else {
+                print("NULL response")
+            }
+            
+            // Manage received data
+            if (data != nil) {
+                self.onSuccess(data!)
+            } else {
+                self.onFailure()
             }
         })
         
