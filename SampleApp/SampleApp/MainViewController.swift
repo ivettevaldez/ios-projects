@@ -2,7 +2,7 @@
 //  MainViewController.swift
 //  SampleApp
 //
-//  Created by Hunabsys on 9/18/18.
+//  Created by Silvia Valdez on 9/18/18.
 //  Copyright © 2018 Silvia Valdez. All rights reserved.
 //
 

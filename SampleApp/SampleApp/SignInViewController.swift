@@ -2,7 +2,7 @@
 //  SignInViewController.swift
 //  SampleApp
 //
-//  Created by Hunabsys on 9/18/18.
+//  Created by Silvia Valdez on 9/18/18.
 //  Copyright © 2018 Silvia Valdez. All rights reserved.
 //
 
@@ -81,7 +81,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func showAlert(_ title: String, _ message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
             switch action.style{
