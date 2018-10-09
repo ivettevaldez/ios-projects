@@ -76,8 +76,8 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     private func goToMainScreen() {
         // Navigate to MainViewController.
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
-        self.present(mainViewController, animated: true, completion: nil)
+        let tableViewController = storyBoard.instantiateViewController(withIdentifier: "TableViewController") as! UITableViewController
+        self.present(tableViewController, animated: true, completion: nil)
     }
     
     private func showAlert(_ title: String, _ message: String) {
