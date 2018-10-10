@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		87046927216EAC1C00255048 /* PersonTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87046926216EAC1C00255048 /* PersonTableViewController.swift */; };
+		87046929216EAE4800255048 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87046928216EAE4800255048 /* Person.swift */; };
 		8764639C215C33D4002EC01A /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764639B215C33D4002EC01A /* SignInViewController.swift */; };
 		878B140B216D62D100E618F7 /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878B140A216D62D100E618F7 /* PersonTableViewCell.swift */; };
 		985B803FF5933D804CE9473A /* Pods_SampleAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BFF21469D80434A64FDA302 /* Pods_SampleAppTests.framework */; };
@@ -33,6 +35,8 @@
 		2A62EB59B3BEFB08F50ABDDE /* Pods-SampleAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SampleAppTests/Pods-SampleAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		3E6BBA0C4DC34210AF0C568B /* Pods_SampleApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5012E7981BF7A09A3A866D70 /* Pods-SampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SampleApp/Pods-SampleApp.release.xcconfig"; sourceTree = "<group>"; };
+		87046926216EAC1C00255048 /* PersonTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTableViewController.swift; sourceTree = "<group>"; };
+		87046928216EAE4800255048 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		8764639B215C33D4002EC01A /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		878B140A216D62D100E618F7 /* PersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTableViewCell.swift; sourceTree = "<group>"; };
 		8BFF21469D80434A64FDA302 /* Pods_SampleAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +109,8 @@
 				E4407C3B21520427004D96F8 /* AppDelegate.swift */,
 				E4407C3D21520427004D96F8 /* MainViewController.swift */,
 				E4407C3F21520427004D96F8 /* Main.storyboard */,
+				87046926216EAC1C00255048 /* PersonTableViewController.swift */,
+				87046928216EAE4800255048 /* Person.swift */,
 				E4407C4221520428004D96F8 /* Assets.xcassets */,
 				E4407C4421520428004D96F8 /* LaunchScreen.storyboard */,
 				E4407C4721520429004D96F8 /* Info.plist */,
@@ -309,6 +315,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87046929216EAE4800255048 /* Person.swift in Sources */,
+				87046927216EAC1C00255048 /* PersonTableViewController.swift in Sources */,
 				E4407C3E21520427004D96F8 /* MainViewController.swift in Sources */,
 				E4407C3C21520427004D96F8 /* AppDelegate.swift in Sources */,
 				878B140B216D62D100E618F7 /* PersonTableViewCell.swift in Sources */,
