@@ -17,6 +17,9 @@ class PersonTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Show navigation bar.
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
         // Load the sample data.
         loadSamplePeople()
     }
