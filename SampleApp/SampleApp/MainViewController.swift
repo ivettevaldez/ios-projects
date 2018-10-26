@@ -14,11 +14,11 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         // Show navigation bar
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+//        self.navigationController?.setNavigationBarHidden(false, animated: true)
         
         // Hide back button
-        self.navigationItem.setHidesBackButton(true, animated: true)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: UIView())
+//        self.navigationItem.setHidesBackButton(true, animated: true)
+//        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: UIView())
     }
 
 }

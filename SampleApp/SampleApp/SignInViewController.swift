@@ -12,6 +12,7 @@ import SwiftyJSON
 class SignInViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Properties
+    
     @IBOutlet weak var textUserView: UITextField!
     @IBOutlet weak var textPasswordView: UITextField!
     @IBOutlet weak var buttonSignInView: UIButton!
@@ -35,6 +36,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: UITextFieldDelegate
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Hide keyboard.
         textField.resignFirstResponder()
@@ -42,25 +44,28 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        // Enable button only if both fields were filled.
         if (hasFilledFields()) {
-            // Enable button if both fields were filled.
             buttonSignInView.isEnabled = true
+        } else {
+            buttonSignInView.isEnabled = false
         }
     }
     
     // MARK: Actions and related functions
+    
     @IBAction func tryToSignIn(_ sender: UIButton) {
-        showActivityIndicator(true)
+         showActivityIndicator(true)
         
-        if (hasValidCredentials()) {
-            signIn()
-        } else {
-            showActivityIndicator(false)
-            
-            let title = "Wrong credentials"
-            let message = "User or password are invalid, try again!"
-            showAlert(title, message)
-        }
+         if (hasValidCredentials()) {
+             signIn()
+         } else {
+             showActivityIndicator(false)
+        
+             let title = "Wrong credentials"
+             let message = "User or password are invalid, try again!"
+             showAlert(title, message)
+         }
     }
     
     private func showActivityIndicator(_ show: Bool) {
