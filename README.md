@@ -1,2 +1,2 @@
-# iOSProjects
-All related to iOS projects.
+# iOS Projects
+All related to iOS.
